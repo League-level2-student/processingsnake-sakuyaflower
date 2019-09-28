@@ -3,23 +3,30 @@
 
 // The Segment class will be used to represent each part of the moving snake.
 
-class Segment {
 
+class Segment {
+int x = 50;
+int y = 100;
+int r = (int)random(157689);
   //2. Create x and y member variables to hold the location of each segment.
 
   // 3. Add a constructor with parameters to initialize each variable.
 
-
+Segment(int x,int y){  
+this.x = x;
+this.y = y;
+}
   // 4. Add getter and setter methods for both the x and y member variables.
+int getX(){
+  return x;
 }
 
 
 // 5. Create (but do not initialize) a Segment variable to hold the head of the Snake
-
+new Segment();
 
 
 // 6. Create and initialize a String to hold the direction of your snake e.g. "up"
-
 
 
 // 7. Create and initialize a variable to hold how many pieces of food the snake has eaten.
@@ -43,9 +50,10 @@ void setup() {
 
 
   // 10. initialize your head to a new segment.
-
+this.head = head;
 
   // 11. Use the frameRate(int rate) method to set the rate to 20.
+frameRate(int 20);
 }
 
 
@@ -55,12 +63,19 @@ void draw() {
 
 
   //12. Call the manageTail, drawFood, drawSnake, move, and collision methods.
+manageTail();
+drawFood();
+drawSnake();
+move();
+collision();
 }
 
 
 // 13. Complete the drawFood method below. (Hint: each piece of food should be a 10 by 10 rectangle).
 
 void drawFood() {
+  for(int i = 0; i<100; i++){
+    rect(r,r,10,10);
 }
 
 
@@ -143,7 +158,8 @@ void collision() {
 void manageTail() {
 
   //Call the drawTail and checkTailCollision methods.
-
+drawTail();
+checkTailCollision();
   // Add a new Segment to your ArrayList that has the same X and Y as the head of your snake.
 
   // To keep your tail the right length:
@@ -153,6 +169,7 @@ void manageTail() {
 
 void drawTail() {
     // Draw a 10 by 10 rectangle for each Segment in your snake ArrayList.
+rect();
 }
 
 
