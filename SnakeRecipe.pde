@@ -3,13 +3,14 @@
 
 // The Segment class will be used to represent each part of the moving snake.
 
-int r = (int)random(100);
- int x;
-  int y;
+int r = (int)random(500*10)/10;
+ 
   
 class Segment {
  
   //2. Create x and y member variables to hold the location of each segment.
+  int x;
+  int y;
   // 3. Add a constructor with parameters to initialize each variable.
 
   Segment(int x, int y) {  
@@ -38,7 +39,7 @@ Segment g;
   
   // 7. Create and initialize a variable to hold how many pieces of food the snake has eaten.
   // give it a value of 1 to start.
-  int k = 1;
+  int k = 0;
   // 8. Create and initialize foodX and foodY variables to hold the location of the food.
 
   // (Hint: use the random method to set both the x and y to random locations within the screen size (500 by 500).)
@@ -67,7 +68,8 @@ Segment g;
 
   void drawFood() {
     for (int i = 0; i<100; i++) {
-      rect(r, r, 10, 10);
+      fill(#E50E0E);
+      rect(foodX, foodY, 10, 10);
     }
   }
 
@@ -90,20 +92,21 @@ Segment g;
     
   switch(direction) {
      case "up":
-    g.setY(y += 10);
+  g.setY(g.y -= 10);
      // move head up here 
      break;
      case "down":
      // move head down here 
-     g.setY(y -= 10);
+     
+       g.setY(g.y += 10);
      break;
      case "left":
-     g.setX(x-=10);
+     g.setX(g.x-=10);
      // figure it out 
      break;
      case "right":
      // mystery code goes here
-     g.setX(x+=10);
+     g.setX(g.x+=10);
      break;
      }
      
@@ -118,17 +121,26 @@ Segment g;
   // 18. Complete the keyPressed method below. Use if statements to set your direction variable depending on what key is pressed.
 
   void keyPressed() {
-    if(keyPressed == up){
-      direction = "up";
+    if(keyCode == UP){
+      if(!direction.equals("down")){
+       direction = "up";
+      }  
     }
-    if(keyPressed == down){
+    
+    if(keyCode == DOWN){
+      if(!direction.equals("up")){
       direction ="down";
+      }
     }
-    if(keyPressed == left){
+    if(keyCode == LEFT){
+      if(!direction.equals("right")){
       direction = "left";
+      }
     }
-    if(keyPressed == right){
+    if(keyCode  == RIGHT){
+      if(!direction.equals("left")){
       direction = "right";
+      }
     }
   }
 
@@ -137,7 +149,18 @@ Segment g;
   // 19. check if your head is out of bounds (teleport your snake head to the other side).
 
   void checkBoundaries() {
-    
+    if(g.x >= 500){
+      g.x = 0;
+    }
+    if(g.x <= 0){
+      g.x = 500;
+    }
+    if(g.y >= 500){
+      g.y = 0;
+    }
+    if(g.y <= 0){
+      g.y = 500;
+    }
   }
 
 
@@ -146,15 +169,25 @@ Segment g;
 
 
 
+
   // 21. Complete the missing parts of the collision method below.
 
   void collision() {
 
     // If the segment is colliding with a piece of food...
-    // Increase the amount of food eaten and set foodX and foodY to new random locations.
+    if(g.x == foodX && g.y == foodY){
+      k++;
+      foodX = ((int)random(500)); 
+      foodX = foodX - foodX%10; 
+      foodY = ((int)random(500));
+      foodY = foodY - foodY%10; 
+      print(foodX+"\n");  
+      print(foodY+"\n");
+      
+    }
   }
-
-
+    // Increase the amount of food eaten and set foodX and foodY to new random locations.
+    
 
   /**
    
@@ -180,8 +213,8 @@ Segment g;
 
   void drawTail() {
     // Draw a 10 by 10 rectangle for each Segment in your snake ArrayList.
-    rect(r, r, 10, 10);
-    fill(#29B98F);
+    rect(g.x, g.y, 10, 10);
+    fill(#062589);
   }
 
 
